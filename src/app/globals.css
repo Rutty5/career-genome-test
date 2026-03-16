@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #0A0F1A;
+  --color-bg-secondary: #111827;
+  --color-text-primary: #E8E8E8;
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+  --color-text-muted: rgba(255, 255, 255, 0.3);
+  --color-accent-orange: #FF8C42;
+  --color-accent-blue: #3B82F6;
+  --color-accent-red: #EF4444;
+  --color-accent-green: #10B981;
+  --color-accent-purple: #A855F7;
+  --color-big5-o: #A855F7;
+  --color-big5-c: #3B82F6;
+  --color-big5-e: #FF8C42;
+  --color-big5-a: #10B981;
+  --color-big5-n: #94A3B8;
+  --color-card-bg: rgba(255, 255, 255, 0.03);
+  --color-card-border: rgba(255, 255, 255, 0.08);
+  --font-heading-en: "Bebas Neue", sans-serif;
+  --font-heading-jp: "Noto Sans JP", sans-serif;
+  --font-body-jp: "Noto Sans JP", sans-serif;
+  --font-mono: "DM Mono", monospace;
+}
+
+body {
+  background: linear-gradient(135deg, #0A0F1A 0%, #111827 50%, #0A0F1A 100%);
+  color: var(--color-text-primary);
+  font-family: var(--font-body-jp);
+  min-height: 100vh;
+}
+
+.font-heading-en {
+  font-family: var(--font-heading-en);
+}
+
+.font-heading-jp {
+  font-family: var(--font-heading-jp);
+  font-weight: 700;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: 8px;
+}
+
+.blur-lock {
+  filter: blur(6px);
+  user-select: none;
+  pointer-events: none;
+}
+
+@keyframes slide-in-right {
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slide-in-left {
+  from { transform: translateX(-30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.3s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.3s ease-out;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+/* DNA Helix Animation */
+@keyframes helix-rotate {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.dna-helix {
+  animation: helix-rotate 3s linear infinite;
+  transform-style: preserve-3d;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
