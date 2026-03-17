@@ -1,9 +1,15 @@
 import { DiagnosisVersion, DiagnosisResults } from "@/store/diagnosis";
 import { BIG5Factor, HCAxis, typeMatrix, big5TiebreakOrder, hcTiebreakOrder, CareerTypeName } from "@/data/typeMatrix";
 import { currentJobs, growthJobs, decliningJobs, categoryRiskMap, JobProfile } from "@/data/jobDatabase";
+import { isReversed } from "@/data/questions";
 
 type BIG5Scores = Record<BIG5Factor, number>;
 type HCScores = Record<HCAxis, number>;
+
+/** 逆転項目は 8 - value で反転 (7→1, 6→2, ..., 1→7) */
+function resolveValue(id: string, rawVal: number): number {
+  return isReversed(id) ? 8 - rawVal : rawVal;
+}
 
 // ══════════════════════════════════════════════════════════════
 // BIG5 raw → normalized 0-100
@@ -18,12 +24,10 @@ export function calculateBIG5(answers: Record<string, number | string>, version:
         ? [1, 2, 3, 4, 5].map((n) => `${f}${n}`)
         : [1, 2, 3].map((n) => `${f}${n}`);
 
-    let answeredCount = 0;
     const raw = ids.reduce((sum, id) => {
-      const val = Number(answers[id]);
-      if (val >= 1 && val <= 7) {
-        answeredCount++;
-        return sum + val;
+      const rawVal = Number(answers[id]);
+      if (rawVal >= 1 && rawVal <= 7) {
+        return sum + resolveValue(id, rawVal);
       }
       return sum + 4; // fallback only for genuinely missing answers
     }, 0);
@@ -44,12 +48,13 @@ export function calculateHC(answers: Record<string, number | string>): HCScores 
 
   for (const a of axes) {
     const ids = [1, 2, 3, 4, 5].map((n) => `${a}${n}`);
+    const count = ids.length;
     const raw = ids.reduce((sum, id) => {
-      const val = Number(answers[id]);
-      if (val >= 1 && val <= 7) return sum + val;
+      const rawVal = Number(answers[id]);
+      if (rawVal >= 1 && rawVal <= 7) return sum + resolveValue(id, rawVal);
       return sum + 4;
     }, 0);
-    result[a] = Math.round(((raw - 5) / (35 - 5)) * 100);
+    result[a] = Math.round(((raw - count) / (count * 7 - count)) * 100);
   }
   return result;
 }
