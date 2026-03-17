@@ -15,7 +15,7 @@ export default function InfoPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!nickname.trim()) {
-      setError("ニックネームを入力してください");
+      setError("お名前を入力してください");
       return;
     }
     if (!ageRange) {
@@ -44,17 +44,17 @@ export default function InfoPage() {
           {/* Nickname */}
           <div>
             <label className="block text-text-secondary text-sm mb-2">
-              ニックネーム <span className="text-accent-red text-xs">必須</span>
+              お名前（フルネーム） <span className="text-accent-red text-xs">必須</span>
             </label>
             <input
               type="text"
               value={nickname}
               onChange={(e) => setNickname(e.target.value)}
-              placeholder="結果表示で使用します"
+              placeholder="例：山田 太郎"
               className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-text-primary
                          placeholder:text-text-muted focus:outline-none focus:border-accent-orange/50
                          transition-colors"
-              maxLength={20}
+              maxLength={30}
             />
           </div>
 

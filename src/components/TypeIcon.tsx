@@ -64,9 +64,9 @@ export default function TypeIcon({
   const glowColor = typeGlow[typeName];
 
   const sizeConfig = {
-    sm: { container: "w-9 h-9", imgSize: 36, radius: "rounded-md" },
-    md: { container: "w-[52px] h-[52px]", imgSize: 52, radius: "rounded-lg" },
-    lg: { container: "w-[72px] h-[72px]", imgSize: 72, radius: "rounded-xl" },
+    sm: { container: "w-11 h-11", imgSize: 44, radius: "rounded-lg" },
+    md: { container: "w-16 h-16", imgSize: 64, radius: "rounded-xl" },
+    lg: { container: "w-20 h-20", imgSize: 80, radius: "rounded-2xl" },
   };
 
   const { container, imgSize, radius } = sizeConfig[size];
@@ -74,23 +74,18 @@ export default function TypeIcon({
 
   return (
     <div className="flex flex-col items-center gap-1">
-      {/* Outer wrapper: border + shadow */}
       <div
-        className={`${container} ${radius} border-2 ${borderColor}
-                     shadow-lg ${glowColor}
-                     bg-[#0A0F1A] p-[2px]`}
+        className={`${container} ${radius} overflow-hidden
+                     shadow-lg ${glowColor}`}
       >
-        {/* Inner clip wrapper: ensures image is fully clipped inside rounded corners */}
-        <div className={`w-full h-full ${radius} overflow-hidden`}>
-          <Image
-            src={iconSrc}
-            alt={typeName}
-            width={imgSize}
-            height={imgSize}
-            className="w-full h-full object-cover"
-            unoptimized
-          />
-        </div>
+        <Image
+          src={iconSrc}
+          alt={typeName}
+          width={imgSize}
+          height={imgSize}
+          className="w-full h-full object-cover rounded-inherit"
+          unoptimized
+        />
       </div>
       {showLabel && (
         <span className="text-text-muted text-xs font-mono mt-1">

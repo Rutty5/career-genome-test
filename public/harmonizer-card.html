@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HARMONIZER Card</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Orbitron:wght@700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .card {
+    width: 1080px;
+    height: 1080px;
+    background: linear-gradient(145deg, #0d1117 0%, #0a1628 30%, #0d1a1a 60%, #0a1117 100%);
+    border-radius: 24px;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #e0e0e0;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(76, 175, 80, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 70%, rgba(129, 199, 132, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Grid pattern top-right */
+  .grid-pattern {
+    position: absolute;
+    top: 28px;
+    right: 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 18px);
+    gap: 4px;
+    opacity: 0.3;
+  }
+  .grid-pattern .dot {
+    width: 18px;
+    height: 18px;
+    background: rgba(76, 175, 80, 0.4);
+    border-radius: 3px;
+  }
+
+  /* Header */
+  .header-title {
+    font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: #c8e6c9;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .header-title span {
+    color: #81c784;
+  }
+
+  .type-name {
+    font-family: 'Orbitron', 'Noto Sans JP', sans-serif;
+    font-size: 30px;
+    font-weight: 900;
+    color: #4caf50;
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Main content layout */
+  .content {
+    display: flex;
+    gap: 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .left-col {
+    flex: 0 0 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .right-col {
+    flex: 1;
+  }
+
+  /* Icon image */
+  .icon-wrapper {
+    width: 340px;
+    height: 220px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid rgba(76, 175, 80, 0.4);
+    position: relative;
+  }
+  .icon-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Score bars */
+  .scores-section {
+    margin-top: 4px;
+  }
+  .scores-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #81c784;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .score-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    gap: 8px;
+  }
+  .score-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #a0a0a0;
+    width: 24px;
+    text-align: right;
+  }
+  .score-bar-bg {
+    flex: 1;
+    height: 14px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .score-bar {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #2e7d32, #4caf50);
+  }
+  .score-bar.high {
+    background: linear-gradient(90deg, #388e3c, #66bb6a);
+  }
+  .score-bar.medium {
+    background: linear-gradient(90deg, #2e7d32, #4caf50);
+  }
+  .score-bar.low {
+    background: linear-gradient(90deg, #1b5e20, #388e3c);
+  }
+
+  /* QR code area */
+  .qr-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .qr-placeholder {
+    width: 90px;
+    height: 90px;
+    background: #4caf50;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+  }
+  .qr-inner {
+    width: 100%;
+    height: 100%;
+    background: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #333;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  /* Right column - type description */
+  .section-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #a5d6a7;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  .description {
+    font-size: 14px;
+    line-height: 1.85;
+    color: #ccc;
+    margin-bottom: 20px;
+  }
+
+  .analysis-title {
+    font-size: 20px;
+    font-weight: 900;
+    color: #e0e0e0;
+    margin-bottom: 14px;
+  }
+
+  .sub-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #a5d6a7;
+    margin-bottom: 6px;
+    margin-top: 14px;
+  }
+  .sub-title:first-of-type {
+    margin-top: 0;
+  }
+
+  .sub-text {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #bbb;
+  }
+
+  /* Footer */
+  .footer {
+    position: absolute;
+    bottom: 36px;
+    left: 48px;
+    right: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-url {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: #e0e0e0;
+    letter-spacing: 1px;
+  }
+  .footer-btn {
+    background: transparent;
+    border: 1px solid rgba(76, 175, 80, 0.5);
+    color: #81c784;
+    padding: 8px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-style: italic;
+  }
+  .footer-logo {
+    width: 36px;
+    height: 36px;
+    opacity: 0.4;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <!-- Grid pattern top-right -->
+  <div class="grid-pattern">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+
+  <!-- Header -->
+  <div class="header-title">CAREER GENOME <span>—</span> 解説シート</div>
+  <div class="type-name">HARMONIZER / ハーモナイザー / 調和者</div>
+
+  <!-- Content -->
+  <div class="content">
+    <!-- Left Column -->
+    <div class="left-col">
+      <!-- Icon -->
+      <div class="icon-wrapper">
+        <img src="/icons/harmonizer.png" alt="HARMONIZER">
+      </div>
+
+      <!-- BIG5 Scores -->
+      <div class="scores-section">
+        <div class="scores-label">BIG5</div>
+        <div class="score-row">
+          <span class="score-label">O</span>
+          <div class="score-bar-bg"><div class="score-bar medium" style="width:55%"></div></div>
+        </div>
+        <div class="score-row">
+          <span class="score-label">C</span>
+          <div class="score-bar-bg"><div class="score-bar medium" style="width:50%"></div></div>
+        </div>
+        <div class="score-row">
+          <span class="score-label">E</span>
+          <div class="score-bar-bg"><div class="score-bar medium" style="width:60%"></div></div>
+        </div>
+        <div class="score-row">
+          <span class="score-label">A</span>
+          <div class="score-bar-bg"><div class="score-bar high" style="width:90%"></div></div>
+        </div>
+        <div class="score-row">
+          <span class="score-label">N</span>
+          <div class="score-bar-bg"><div class="score-bar low" style="width:45%"></div></div>
+        </div>
+      </div>
+
+      <!-- Competency Scores -->
+      <div class="scores-section">
+        <div class="scores-label">Competencies</div>
+        <div class="score-row">
+          <span class="score-label" style="width:36px">ACT</span>
+          <div class="score-bar-bg"><div class="score-bar medium" style="width:50%"></div></div>
+        </div>
+        <div class="score-row">
+          <span class="score-label" style="width:36px">THK</span>
+          <div class="score-bar-bg"><div class="score-bar medium" style="width:55%"></div></div>
+        </div>
+        <div class="score-row">
+          <span class="score-label" style="width:36px">TMW</span>
+          <div class="score-bar-bg"><div class="score-bar high" style="width:88%"></div></div>
+        </div>
+      </div>
+
+      <!-- QR Code -->
+      <div class="qr-area">
+        <div class="qr-placeholder">
+          <div class="qr-inner">QR<br>CODE</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right-col">
+      <div class="section-title">タイプ解説</div>
+      <div class="description">
+        「協調性(A)」の行の「チームで働く力(TMW)」の列に位置するタイプ。高い【協調性(A)】と深い【チームで働く力(TMW)】が融合したタイプ。多様な価値観を持つメンバーの声を拾い上げ、チームの一体感を生み出す。心理的安全性を自然に作り出し、全員が発言しやすい場を維持する。
+      </div>
+
+      <div class="analysis-title">特性分析</div>
+
+      <div class="sub-title">1. 具体的な強み</div>
+      <div class="sub-text">
+        心理的安全性の構築、多様性の活用、ストレス緩和力。多様な声を束ね、チームの一体感を生む能力に長ける。メンバー間の意見の相違を尊重しながら、全体の方向性をまとめ上げる。対立が生じた際も感情的にならず、冷静に調和を図る。
+      </div>
+
+      <div class="sub-title">2. 注意点と課題</div>
+      <div class="sub-text">
+        対立の過度な回避、フィードバックの先送り。調和を重視するあまり、必要な対立や厳しいフィードバックを控えてしまう傾向がある。意思決定において「全員一致」を求めすぎると、スピード感を失うリスクがある。
+      </div>
+
+      <div class="sub-title">3. 推奨される役割</div>
+      <div class="sub-text">
+        人事（労務・ケア）、チームオペレーター、コミュニティマネージャー、カウンセラー、ファシリテーター、ダイバーシティ推進、福祉施設管理。
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div>
+      <div class="footer-url">CAREERGENOME.com/type/harmonizer</div>
+      <div class="footer-btn">アプリで詳細を確認</div>
+    </div>
+    <div style="font-size: 28px; opacity: 0.3;">✦</div>
+  </div>
+</div>
+
+</body>
+</html>

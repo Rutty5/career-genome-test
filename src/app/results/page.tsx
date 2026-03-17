@@ -18,6 +18,7 @@ export default function ResultsPage() {
   const [copied, setCopied] = useState(false);
   const [exportCopied, setExportCopied] = useState(false);
   const [reportGenerating, setReportGenerating] = useState(false);
+  const [programOpen, setProgramOpen] = useState(false);
 
   const typeData = useMemo(() => {
     if (!results) return null;
@@ -57,7 +58,7 @@ export default function ResultsPage() {
     const date = new Date().toISOString().split("T")[0];
     const id = `CGT-${Date.now().toString(36).toUpperCase()}`;
     const text = `===== CAREER GENOME 診断結果データ =====
-ニックネーム: ${userInfo.nickname}
+お名前: ${userInfo.nickname}
 診断日: ${date}
 診断ID: ${id}
 バージョン: PAID
@@ -386,20 +387,66 @@ CC10 5年後理想: ${results.ccAnswers.CC10 || "未回答"}
         </section>
 
         {/* Section 12: CTA */}
-        <section className="card p-8 text-center bg-gradient-to-br from-accent-orange/5 to-accent-purple/5 border-accent-orange/20">
-          <h2 className="font-heading-jp text-xl text-text-primary mb-3">
-            CAREER GENOME PROGRAMで、キャリアを実現する
-          </h2>
-          <p className="text-text-secondary text-sm mb-6 leading-relaxed">
-            AIスキル習得＋キャリア戦略＋応募書類作成を3ヶ月で完了
-          </p>
-          <button
-            className="py-4 px-8 rounded-lg bg-accent-purple text-white font-heading-jp text-lg
-                       hover:bg-opacity-90 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]
-                       shadow-lg shadow-accent-purple/20"
-          >
-            プログラムの詳細を見る
-          </button>
+        <section className="card p-8 bg-gradient-to-br from-accent-orange/5 to-accent-purple/5 border-accent-orange/20">
+          <div className="text-center">
+            <h2 className="font-heading-jp text-xl text-text-primary mb-3">
+              CAREER GENOME PROGRAMで、キャリアを実現する
+            </h2>
+            <p className="text-text-secondary text-sm mb-6 leading-relaxed">
+              AIスキル習得＋キャリア戦略＋応募書類作成を3ヶ月で完了
+            </p>
+            <button
+              onClick={() => setProgramOpen(!programOpen)}
+              className="py-4 px-8 rounded-lg bg-accent-purple text-white font-heading-jp text-lg
+                         hover:bg-opacity-90 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]
+                         shadow-lg shadow-accent-purple/20"
+            >
+              {programOpen ? "閉じる" : "プログラムの詳細を見る"}
+            </button>
+          </div>
+
+          {programOpen && (
+            <div className="mt-8 space-y-3">
+              <p className="text-center text-text-muted text-xs tracking-widest mb-4">
+                3ヶ月で手に入る 7つの成果
+              </p>
+
+              {[
+                { num: "01", title: "CAREER GENOME 診断結果", sub: "性格特性 ＋ HR COMPETENCY", color: "accent-purple" },
+                { num: "02", title: "POTECT 仕事力診断レポート", sub: "適性・気質・ストレス分析", color: "accent-blue" },
+                { num: "03", title: "AI基礎力習得", sub: "LLM・AI AGENT・PROMPT・CONTEXT", color: "accent-green" },
+                { num: "04", title: "業務効率化　作品2点制作", sub: "ノーコードアプリ制作", color: "accent-orange" },
+                { num: "05", title: "CAREER PROFILING", sub: "応募書類 ＋ CAREER GENOME診断 ＋ PORTFOLIO", color: "accent-purple" },
+                { num: "06", title: "生成AIパスポート資格取得対策", sub: "資格試験対策プログラム", color: "accent-blue" },
+                { num: "07", title: "転職サポート", sub: "求人データベース活用", color: "accent-orange" },
+              ].map((item) => (
+                <div
+                  key={item.num}
+                  className="flex items-start gap-4 p-4 rounded-lg bg-bg-primary/50 border border-border-primary/50
+                             hover:border-accent-purple/30 transition-all duration-200"
+                >
+                  <span className={`text-${item.color} font-heading text-lg font-bold opacity-60 min-w-[28px]`}>
+                    {item.num}
+                  </span>
+                  <div>
+                    <p className="text-text-primary font-heading-jp text-sm font-medium">
+                      {item.title}
+                    </p>
+                    <p className="text-text-muted text-xs mt-1 tracking-wide">
+                      {item.sub}
+                    </p>
+                  </div>
+                </div>
+              ))}
+
+              <div className="pt-4 text-center">
+                <p className="text-text-muted text-xs leading-relaxed">
+                  オンライン・マンツーマン（週1回×60分）<br />
+                  全12回
+                </p>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* Footer */}
