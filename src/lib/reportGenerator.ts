@@ -174,8 +174,8 @@ export async function generateReport(data: ReportData): Promise<jsPDF> {
   });
   y += 66;
 
-  // HR COMPETENCY 3-AXIS
-  y = drawSectionTitle(y, "HR COMPETENCY 3-AXIS");
+  // BUSINESS COMPETENCY 3-AXIS
+  y = drawSectionTitle(y, "BUSINESS COMPETENCY 3-AXIS");
 
   const hcAxes: HCAxis[] = ["ACT", "THK", "TMW"];
   const hcColors: Record<string, [number, number, number]> = {
@@ -465,7 +465,7 @@ export async function generateReport(data: ReportData): Promise<jsPDF> {
   doc.setTextColor(...textMuted);
   doc.text("WEF Future of Jobs Report 2025  |  McKinsey Global Institute  |  NRI × Oxford 日本版自動化リスク  |  経済産業省 IT人材需給調査", margin, y);
   y += 5;
-  doc.text("CAREER GENOME (BIG5 × HR COMPETENCY)", margin, y);
+  doc.text("CAREER GENOME (BIG5 × BUSINESS COMPETENCY)", margin, y);
 
   drawFooter("Sheet 3/3 — RESULT GUIDE");
 

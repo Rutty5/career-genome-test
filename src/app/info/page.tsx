@@ -8,7 +8,6 @@ export default function InfoPage() {
   const router = useRouter();
   const { setUserInfo } = useDiagnosis();
   const [nickname, setNickname] = useState("");
-  const [ageRange, setAgeRange] = useState("");
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
@@ -18,12 +17,8 @@ export default function InfoPage() {
       setError("お名前を入力してください");
       return;
     }
-    if (!ageRange) {
-      setError("年代を選択してください");
-      return;
-    }
     setError("");
-    setUserInfo({ nickname: nickname.trim(), ageRange, email: email.trim() });
+    setUserInfo({ nickname: nickname.trim(), ageRange: "", email: email.trim() });
     router.push("/questions");
   };
 
@@ -56,29 +51,6 @@ export default function InfoPage() {
                          transition-colors"
               maxLength={30}
             />
-          </div>
-
-          {/* Age Range */}
-          <div>
-            <label className="block text-text-secondary text-sm mb-2">
-              年代 <span className="text-accent-red text-xs">必須</span>
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              {["40代前半", "40代後半", "50代前半", "50代後半"].map((age) => (
-                <button
-                  key={age}
-                  type="button"
-                  onClick={() => setAgeRange(age)}
-                  className={`py-3 px-4 rounded-lg border text-sm transition-all duration-200 ${
-                    ageRange === age
-                      ? "border-accent-orange bg-accent-orange/10 text-accent-orange"
-                      : "border-white/10 text-text-secondary hover:border-white/20"
-                  }`}
-                >
-                  {age}
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* Email */}

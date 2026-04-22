@@ -8,6 +8,7 @@ import { big5Labels, BIG5Factor, CareerTypeName } from "@/data/typeMatrix";
 import RadarChart from "@/components/RadarChart";
 import HCBarChart from "@/components/HCBarChart";
 import TypeIcon from "@/components/TypeIcon";
+import GenomeMap from "@/components/GenomeMap";
 import { downloadReport } from "@/lib/reportGenerator";
 
 export default function ResultsPage() {
@@ -74,7 +75,7 @@ E（外向性）: ${results.big5.E}
 A（協調性）: ${results.big5.A}
 N（安定性）: ${results.big5.N}
 
-■ HR COMPETENCY スコア（0-100）
+■ BUSINESS COMPETENCY スコア（0-100）
 ACT（行動力）: ${results.hc.ACT}
 THK（思考力）: ${results.hc.THK}
 TMW（協働力）: ${results.hc.TMW}
@@ -121,6 +122,27 @@ CC10 5年後理想: ${results.ccAnswers.CC10 || "未回答"}
           </h1>
           <p className="text-text-secondary text-lg font-heading-jp mb-3">{typeData.nameJp}</p>
           <p className="text-accent-orange text-sm italic">{typeData.catch}</p>
+        </section>
+
+        {/* Type Image */}
+        <section className="overflow-hidden rounded-2xl border border-white/10" style={{ maxHeight: "480px" }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={`/types/${results.mainType.toLowerCase()}.png`}
+            alt={`${results.mainType} タイプ解説`}
+            className="w-full object-cover object-top"
+          />
+        </section>
+
+        {/* Genome Map */}
+        <section className="card p-6">
+          <h2 className="font-heading-jp text-lg text-text-primary mb-4 text-center">CAREER GENOME MAP</h2>
+          <GenomeMap
+            big5={results.big5}
+            hc={results.hc}
+            typeName={typeData.name}
+            size={320}
+          />
         </section>
 
         {/* Section 2: Career Phrase */}
@@ -339,7 +361,7 @@ CC10 5年後理想: ${results.ccAnswers.CC10 || "未回答"}
             onClick={() => setHcOpen(!hcOpen)}
             className="w-full p-6 flex justify-between items-center text-left hover:bg-white/2 transition-colors"
           >
-            <h2 className="font-heading-jp text-lg text-text-primary">HR COMPETENCY 詳細</h2>
+            <h2 className="font-heading-jp text-lg text-text-primary">BUSINESS COMPETENCY 詳細</h2>
             <span className="text-text-muted text-xl">{hcOpen ? "−" : "+"}</span>
           </button>
           {hcOpen && (
@@ -412,7 +434,7 @@ CC10 5年後理想: ${results.ccAnswers.CC10 || "未回答"}
               </p>
 
               {[
-                { num: "01", title: "CAREER GENOME 診断結果", sub: "性格特性 ＋ HR COMPETENCY", color: "accent-purple" },
+                { num: "01", title: "CAREER GENOME 診断結果", sub: "性格特性 ＋ BUSINESS COMPETENCY", color: "accent-purple" },
                 { num: "02", title: "POTECT 仕事力診断レポート", sub: "適性・気質・ストレス分析", color: "accent-blue" },
                 { num: "03", title: "AI基礎力習得", sub: "LLM・AI AGENT・PROMPT・CONTEXT", color: "accent-green" },
                 { num: "04", title: "業務効率化　作品2点制作", sub: "ノーコードアプリ制作", color: "accent-orange" },

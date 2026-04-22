@@ -38,7 +38,7 @@ export default function TopPage() {
           15のキャリアタイプを判定します
         </p>
         <p className="text-text-muted text-xs mb-10 max-w-md mx-auto leading-relaxed">
-          BIG5性格分析 × HR COMPETENCY × キャリアコンテキストの科学的診断で、<br />
+          BIG5性格分析 × BUSINESS COMPETENCY × キャリアコンテキストの科学的診断で、<br />
           現在の適職と2030年の適職をマッチングします
         </p>
 
@@ -50,7 +50,7 @@ export default function TopPage() {
                        hover:bg-opacity-90 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]
                        shadow-lg shadow-accent-orange/20"
           >
-            診断を始める（50問・約12分）
+            診断を始める（95問・約20分）
           </button>
         </div>
 
@@ -60,7 +60,7 @@ export default function TopPage() {
             <span className="block mb-1">
               <span className="text-accent-purple font-mono text-sm">BIG5性格分析</span>
               <span className="text-text-muted mx-2">×</span>
-              <span className="text-accent-blue font-mono text-sm">HR COMPETENCY</span>
+              <span className="text-accent-blue font-mono text-sm">BUSINESS COMPETENCY</span>
             </span>
             <span className="block">
               <span className="text-text-muted mr-2">=</span>

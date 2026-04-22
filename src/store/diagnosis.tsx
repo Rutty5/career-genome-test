@@ -13,6 +13,8 @@ export interface UserInfo {
 export interface DiagnosisResults {
   big5: { O: number; C: number; E: number; A: number; N: number };
   hc: { ACT: number; THK: number; TMW: number };
+  bc: { SH: number; HK: number; JK: number; KH: number; KK: number; SZ: number; HS: number; KC: number; JN: number; JH: number; KR: number; SC: number };
+  bcCategory: { ACT: number; THK: number; TMW: number };
   mainType: string;
   subType: string | null;
   subTypeDiff: number | null;

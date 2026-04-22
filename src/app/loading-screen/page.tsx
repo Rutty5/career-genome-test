@@ -8,7 +8,7 @@ import { computeResults } from "@/lib/scoring";
 const loadingTexts = [
   "あなたの回答を分析しています...",
   "性格特性を解析中...",
-  "HR COMPETENCYを測定中...",
+  "ビジネスコンピテンシーを測定中...",
   "84職種とマッチング中...",
   "あなたのキャリアDNAを解読しています...",
 ];
